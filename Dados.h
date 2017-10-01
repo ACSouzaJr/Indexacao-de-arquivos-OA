@@ -1,6 +1,6 @@
 /*
 *	024312
-*	Leonardo Nunes de Souza                 
+*	Leonardo Nunes de Souza
 *	34
 *	G
 *	AB
@@ -31,7 +31,16 @@ struct IndicePrimario
 
 };
 
-typedef struct IndicePrimario indice_primario;
+struct Index
+{
+    int tamanho;
+    bool flag_atualizacao;
+    struct IndicePrimario indice_primario[100];
+
+};
+
+typedef struct Index Index;
+
 
 /*
 *	op	(chave)-> indice secundario
@@ -46,3 +55,14 @@ struct IndiceSecundario
 	char chave_primaria[31];
 
 };
+
+struct IndexSec
+{
+    int tamanho;
+    bool flag_atualizacao;
+    struct IndiceSecundario indice_sec[100];
+};
+
+/*if(chave_secundaria == buscabinaria(arquivo))
+    vet[]<<chave_primaria
+*/

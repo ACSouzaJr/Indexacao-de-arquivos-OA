@@ -13,6 +13,13 @@ int main(int argc, char const *argv[])
 	/*	Criar Indice 	*/
 	/*	Indices sao arrays de struct*/
 
+	Index *indice = CriaIndex();
+
+	for (int i = 0; i < indice->tamanho; ++i)
+	{
+
+	}
+
 	while( 1 ){
 
 		/*	Menu	*/
@@ -23,24 +30,24 @@ int main(int argc, char const *argv[])
 		printf("3 - Atualizar registro\n");
 		printf("4 - Sair\n");
 		printf("***********************************\n");
-	
+
 		int escolha;
 		scanf("%d", escolha);
-	
+
 		/*	Req 3) Regravar indece apos manipulacao*/
-	
+
 		switch ( escolha ){
-	
+
 			case 1:
 				/*	Req 4) Incluasao registro*/
 				Inclusao();
 				break;
-	
+
 			case 2:
 				/*	Req 5) Excluir registro*/
 				Exclusao();
 				break;
-	
+
 			case 3:
 				/*	Atualizar registro
 				*	Muda chave primaria
@@ -48,15 +55,15 @@ int main(int argc, char const *argv[])
 				*/
 				Atualizacao();	/*	Faco nem ideia como fazer */
 				break;
-	
+
 			case 4:
 				return 0;
-	
+
 			default:
 				printf("Nao tem essa opcao\n");
-	
+
 
 		}/*	Fim switch*/
 	}/*	fim while*/
-	
+
 }

@@ -7,7 +7,9 @@ void AtualizaIndice( const char *arquivo, indice_primario *Index ){
 
 	FILE *fp;
 
-	int tamanho = sizeof(Index) / sizeof(Index[0]);
+	int tamanho = Index->tamanho;
+
+
 
 	fp = fopen( "arquivo", "w" );
 
@@ -15,8 +17,8 @@ void AtualizaIndice( const char *arquivo, indice_primario *Index ){
 	for ( int i = 0; i < tamanho; ++i )
 	{
 		//fwrite(&Index[i]->chave_primaria, sizeof(indice_primario), 1, fp);
-		fprintf( fp, "%s\t", Index[i]->chave_primaria );
-		fprintf( fp, "%d\n", Index[i]->nrr );
+		fprintf( fp, "%s\t", Index->indice_primario[i].chave_primaria );
+		fprintf( fp, "%d\n", Index->indice_primario[i].nrr );
 	}
 
 	fclose(fp);
@@ -28,20 +30,32 @@ void CriarIndice( const char *arquivo ){
 
 	FILE *fp;
 
-	fp = fopen( "arquivo", "r" );
+	fp = fopen( "lista1.txt", "r" );
 
 	registro_aluno registro;
+
+	char c;
 
 	while( !feof(fp) ){
 
 		fread(&registro.matric, sizeof(char), 6, fp);
-		//fread(, sizeof(char), 1, fp);
+		fread(c, sizeof(char), 1, fp);/*	espacos*/
 		fread(&registro.nome, sizeof(char), 40, fp);
+		fread(c, sizeof(char), 1, fp);
 		fread(&registro.op, sizeof(char), 5, fp);
+		fread(c, sizeof(char), 1, fp);
 		fread(&registro.curso, sizeof(char), 9, fp);
+		fread(c, sizeof(char), 1, fp);
 		fread(&registro.turma, sizeof(char), 2, fp);
+		fread(c, sizeof(char), 1, fp);
 
 	}
+
+	registro.matric[7] = '\0';
+	registro.nome[41]= '\0';
+	registro.op[6]= '\0';
+	registro.curso[10]= '\0';
+	registro.turma[3]= '\0';
 
 	printf("%s\n", registro.matric);
 	printf("%s\n", registro.nome);
@@ -50,3 +64,5 @@ void CriarIndice( const char *arquivo ){
 	printf("%s\n", registro.curso);
 
 }
+
+024312 Leonardo Nunes de Souza                  34    G         AB
