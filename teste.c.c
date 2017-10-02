@@ -1,58 +1,95 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "Dados.h"
+
+Index* criaIndex();
+int insereIndex(Index *index, struct IndicePrimario indice);
+
+void AtualizaIndice( const char *arquivo, Index *index ){
+
+    FILE *fp;
+
+    int tamanho = index->tamanho;
+
+
+
+    fp = fopen( arquivo, "w" );
+
+    /*lista cresce verticalmente*/
+    for ( int i = 0; i < tamanho; ++i )
+    {
+        //fwrite(&Index[i]->chave_primaria, sizeof(indice_primario), 1, fp);
+        fprintf( fp, "%s\t", index->indice_primario[i].chave_primaria );
+        fprintf( fp, "%d\n", index->indice_primario[i].nrr );
+    }
+
+    fclose(fp);
+}
 
 int main(int argc, char const *argv[])
 {
-
-    struct Registro
-{
-
-    char matric[7];
-    char nome[41];
-    char op[6];
-    char curso[10];
-    char turma[3];
-
-};
-
-
-typedef struct Registro registro_aluno;
 
     FILE *fp;
 
     fp = fopen( "lista1.txt", "r" );
 
+    Index *index = criaIndex();
+
     registro_aluno registro;
+    struct IndicePrimario indice;
 
-    char c;
+    int i = 0;
+    while( !feof(fp) ){
+
+        fread(&registro.matric, sizeof(char), 7, fp);
+        //fgetc(fp);
+        fread(&registro.nome, sizeof(char), 41, fp);
+        //fgetc(fp);
+        fread(&registro.op, sizeof(char), 6, fp);
+        //fgetc(fp);
+        fread(&registro.curso, sizeof(char), 10, fp);
+        //fgetc(fp);
+        fread(&registro.turma, sizeof(char), 3, fp);
+        fgetc(fp);
 
 
-        fread(&registro.matric, sizeof(char), 6, fp);
-        fread(&c, sizeof(char), 1, fp);/*    espacos*/
-        fread(&registro.nome, sizeof(char), 40, fp);
-        fread(&c, sizeof(char), 1, fp);
-        fread(&registro.op, sizeof(char), 4, fp);
-        fread(&c, sizeof(char), 1, fp);
-        fread(&registro.curso, sizeof(char), 9, fp);
-        fread(&c, sizeof(char), 1, fp);
-        fread(&registro.turma, sizeof(char), 2, fp);
-        fread(&c, sizeof(char), 1, fp);
+        /*  Mostrar na tela*/
+        /*  Comentar matric se quiser espaco na string
+        */
+        registro.matric[6] = '\0';
+        registro.nome[40]= '\0';
+        registro.op[5]= '\0';
+        registro.curso[9]= '\0';
+        registro.turma[2]= '\0';
+
+        printf("%s\t", registro.matric);
+        printf("%s\t", registro.nome);
+        printf("%s\t", registro.op);
+        printf("%s\t", registro.curso);
+        printf("%s\n", registro.turma);
 
 
 
+        /*  Cria chave primaria*/
+        strcpy(indice.chave_primaria, registro.matric);
+        strncat(indice.chave_primaria, registro.nome, 24);
+        indice.nrr = i;
 
-/*
-    registro.matric[7] = '\0';
-    registro.nome[41]= '\0';
-    registro.op[6]= '\0';
-    registro.curso[10]= '\0';
-    registro.turma[3]= '\0';
-*/
-    printf("%s\n", registro.matric);
-    printf("%s\n", registro.nome);
-    printf("%s\n", registro.op);
-    printf("%s\n", registro.curso);
-    printf("%s\n", registro.turma);
+        insereIndex(index, indice);
+
+        printf("%s\n", indice.chave_primaria);
+
+        ++i;
+
+
+    }
+
+    fclose(fp);
+
+    AtualizaIndice("arquivo", index);
+
+
 
     return 0;
 }

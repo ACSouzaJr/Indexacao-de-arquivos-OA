@@ -31,6 +31,8 @@ struct IndicePrimario
 
 };
 
+
+
 struct Index
 {
     int tamanho;
