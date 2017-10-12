@@ -1,10 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "Dados.h"
+#include "Pilha.h"
+#include <string.h>
+#include "index.h"
 
 /*	Falta comentar sobre os indeces secundarios*/
 
 /*
 *	Index e o vetor de indices. Criar indicador de atualizacao?
 */
-void Inclusao(registro_aluno registro, Pilha PED){
+void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 	/*	Checar se houve mudancas anteriormente*/
 	if ( PED->qtd != 0){
@@ -17,12 +23,12 @@ void Inclusao(registro_aluno registro, Pilha PED){
 		*/
 
 		/*	Registro*/
-		FIlE = *fp;
+		FILE *fp;
 
 		int nrr = RemovePilha(PED);
 
-		fp = fopen("Arq_registro", "a");
-		fseek(fp, nrr*sizeof(registro), SEKK_SET);
+		fp = fopen("lista1.txt", "a");
+		fseek(fp, nrr*sizeof(registro), SEEK_SET);
 
 		fprintf(fp, "%s\t", registro.matric);
 		fprintf(fp, "%s\t", registro.nome);
@@ -43,8 +49,8 @@ void Inclusao(registro_aluno registro, Pilha PED){
 
 
 		/*	Registro*/
-		FIlE = *fp;
-		fp = fopen("Arq_registro", "a");
+		FILE *fp;
+		fp = fopen("lista1.txt", "a");
 
 		fprintf(fp, "%s\t", registro.matric);
 		fprintf(fp, "%s\t", registro.nome);
@@ -56,21 +62,27 @@ void Inclusao(registro_aluno registro, Pilha PED){
 	}
 
 		/* Indice Primario*/
-		insereIndex(index, indice);
+		/*  Cria chave primaria*/	//fazer funcao cria indice primerio
+		struct IndicePrimario indice;
+        strcpy(indice.chave_primaria, registro.matric);
+        strncat(indice.chave_primaria, registro.nome, 24);
+        indice.nrr = index->tamanho+1;
+
+		InsereIndex(index, indice);
 		HeapSort(index);
 
 		/*	Indice Secundario*/
-		insereIndexSec(indexsec, indice_sec);
-		HeapSort(indexsec);
+		//InsereIndexSec(indexsec, indice_sec);
+		//HeapSort(indexsec);
 
 
-		AtualizaIndice("nome_arquivo", index);
+		AtualizaIndice("indicelista1.ind", index);
 
 		//Como lidar corretamente com as flags_atuaização
 }
 
 
-void Exclusao(char *chave_primaria, Pilha *pi){
+//void Exclusao(Index *index, Pilha *pi){
 
 	/*
 	*	Remove, adicionando flag de remoçao -> empilha PED
@@ -80,25 +92,25 @@ void Exclusao(char *chave_primaria, Pilha *pi){
 
 
 	/* Indice Primario*/
-	chave_primaria_pos = BuscaBinaria(index, chave_primaria[]);
-	removeindex(index, chave_primaria_pos);
+//	chave_primaria_pos = BuscaBinaria( index->chave_primaria[], index, 0, index->tamanho-1);
+//	removeindex(index, chave_primaria_pos);
 
 	/*	Registro*/	//->entra dentro do arquivo e adiciona flag de remoção
-	int nrr = index[chave_primaria_pos].nrr //posiçao relativa do resgistro. 1 registro possui 67 chars
-	File *fp;
-	fp = fopen("resgistro", "a");
-	fseek(fp, nrr*sizeof(registro), SEKK_SET);//A partir do começo
-	fprintf(fp, "*");
-	fclose(fp);
+//	int nrr = index[chave_primaria_pos].nrr //posiçao relativa do resgistro. 1 registro possui 67 chars
+//	FILE *fp;
+//	fp = fopen("resgistro", "a");
+//	fseek(fp, nrr*sizeof(registro), SEEK_SET);//A partir do começo
+//	fprintf(fp, "*");
+//	fclose(fp);
 
-	InserePilha(pi, nrr);
+//	InserePilha(pi, nrr);
 
-	AtualizaIndice("arquivo", index);
+//	AtualizaIndice("arquivo", index);
 
 	/*	Indice secundario*/
 		//precisa remover o indice secundario.
 
-}
+//}
 
 /*	Remove elemeno do vetor
 void remover (int posicao, int vetor[])
@@ -117,7 +129,8 @@ void remover (int posicao, int vetor[])
 
 
 
-void Atualizacao(){	/*	Utilizar a chave primaria*/
+//void Atualizacao(){
+	/*	Utilizar a chave primaria*/
 
 	/*	Checar se muda chave primaria*/
 
@@ -130,18 +143,19 @@ void Atualizacao(){	/*	Utilizar a chave primaria*/
 		/*	mostrar registro*/
 
 		/*	Indice*/
-		int matricula;
+		//int matricula;
 
-		printf("Qual a :\n");
-		scanf("%d", matricula);
+//		printf("Qual a :\n");
+//		scanf("%d", matricula);
 
-		int chave_primaria_pos = BuscaBinaria(chave_primaria);
-		removeIndex(index, chave_primaria_pos);
+//		int chave_primaria_pos = BuscaBinaria(chave_primaria);
+//		RemoveIndex(index, chave_primaria_pos);
+
 		/*	Informar nova chave primaria*/
 		//fazer nova chave
 
-		insereIndex(index, chave_primaria);
-		HeapSort(index);
+//		InsereIndex(index, chave_primaria);
+//		HeapSort(index);
 
 		/* Registro*/
 
@@ -152,12 +166,11 @@ void Atualizacao(){	/*	Utilizar a chave primaria*/
 	/*	Se nao mudar chave primaria*/
 		/*	Fazer alteracao no campo*/
 
-}
-
+//}
 
 
 	/*	informa o registro a ser modificado*/
-switch ( opcao )
+/*switch ( opcao )
 
 	case 'M':
 	case 'N':
@@ -165,7 +178,7 @@ switch ( opcao )
 	1 -> index[1]
 	2
 	3
-
+*/
 
 
 

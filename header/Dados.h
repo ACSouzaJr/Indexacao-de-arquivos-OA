@@ -68,3 +68,21 @@ struct IndexSec
 /*if(chave_secundaria == buscabinaria(arquivo))
     vet[]<<chave_primaria
 */
+
+
+
+/*  Declaracao de funcoes*/
+
+/*  funcoes.c*/
+void CriarIndice(Index *index);
+void AtualizaIndice( const char *arquivo, Index *Index );
+
+/*  Heap*/
+void BuildHeap( Index vetor[], int tamanho );
+void Heapify( Index vetor[], int i, int tamanho );
+void HeapSort( Index vetor[] );
+
+/*  Busca binaria*/
+int buscabinaria(char *busca, Index vetor[], int inicio, int fim);
+
+/*  esqueleto.c*/

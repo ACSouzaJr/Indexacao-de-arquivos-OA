@@ -1,68 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Dados.h"
+#include "index.h"
+
+
 /*
 *	Reescreve os indices primarios no arquivo de indices
 *	Apaga o arquivo e reescreve
 */
 
-void AtualizaIndice( const char *arquivo, indice_primario *Index ){
+void AtualizaIndice( const char *arquivo, Index *index ){
 
 	FILE *fp;
 
-	int tamanho = Index->tamanho;
+	int tamanho = index->tamanho;
 
 
 
-	fp = fopen( "arquivo", "w" );
+	fp = fopen( arquivo, "w" );
 
 	/*lista cresce verticalmente*/
 	for ( int i = 0; i < tamanho; ++i )
 	{
 		//fwrite(&Index[i]->chave_primaria, sizeof(indice_primario), 1, fp);
-		fprintf( fp, "%s\t", Index->indice_primario[i].chave_primaria );
-		fprintf( fp, "%d\n", Index->indice_primario[i].nrr );
+		fprintf( fp, "%s\t", index->indice_primario[i].chave_primaria );
+		fprintf( fp, "%d\n", index->indice_primario[i].nrr );
 	}
 
 	fclose(fp);
 }
 
 
-/*	NAO funciona*/
-void CriarIndice( const char *arquivo ){
 
-	FILE *fp;
+void CriarIndice(Index *index){
 
-	fp = fopen( "lista1.txt", "r" );
+	 FILE *fp;
 
-	registro_aluno registro;
+    fp = fopen( "lista1.txt", "r" );
 
-	char c;
+//    Index *index = CriaIndex();
 
-	while( !feof(fp) ){
+    registro_aluno registro;
+    struct IndicePrimario indice;
 
-		fread(&registro.matric, sizeof(char), 6, fp);
-		fread(c, sizeof(char), 1, fp);/*	espacos*/
-		fread(&registro.nome, sizeof(char), 40, fp);
-		fread(c, sizeof(char), 1, fp);
-		fread(&registro.op, sizeof(char), 5, fp);
-		fread(c, sizeof(char), 1, fp);
-		fread(&registro.curso, sizeof(char), 9, fp);
-		fread(c, sizeof(char), 1, fp);
-		fread(&registro.turma, sizeof(char), 2, fp);
-		fread(c, sizeof(char), 1, fp);
+    int i = 1;
+    while( !feof(fp) ){
 
-	}
+        fread(&registro.matric, sizeof(char), 7, fp);
+        //fgetc(fp);
+        fread(&registro.nome, sizeof(char), 41, fp);
+        //fgetc(fp);
+        fread(&registro.op, sizeof(char), 6, fp);
+        //fgetc(fp);
+        fread(&registro.curso, sizeof(char), 10, fp);
+        //fgetc(fp);
+        fread(&registro.turma, sizeof(char), 3, fp);
+        fgetc(fp);
 
-	registro.matric[7] = '\0';
-	registro.nome[41]= '\0';
-	registro.op[6]= '\0';
-	registro.curso[10]= '\0';
-	registro.turma[3]= '\0';
 
-	printf("%s\n", registro.matric);
-	printf("%s\n", registro.nome);
-	printf("%s\n", registro.op);
-	printf("%s\n", registro.curso);
-	printf("%s\n", registro.curso);
+        /*  Mostrar na tela*/
+        /*  Comentar matric se quiser espaco na string
+        */
+        registro.matric[6] = '\0';
+        registro.nome[40]= '\0';
+        registro.op[5]= '\0';
+        registro.curso[9]= '\0';
+        registro.turma[2]= '\0';
+
+        printf("%s\t", registro.matric);
+        printf("%s\t", registro.nome);
+        printf("%s\t", registro.op);
+        printf("%s\t", registro.curso);
+        printf("%s\n", registro.turma);
+
+
+
+        /*  Cria chave primaria*/
+        strcpy(indice.chave_primaria, registro.matric);
+        strncat(indice.chave_primaria, registro.nome, 24);
+        indice.nrr = i;
+
+        InsereIndex(index, indice);
+
+        printf("%s\n", indice.chave_primaria);
+
+        ++i;
+
+
+    }
+
+    fclose(fp);
+
+    AtualizaIndice("indicelista1.ind", index);
+
 
 }
-
-024312 Leonardo Nunes de Souza                  34    G         AB

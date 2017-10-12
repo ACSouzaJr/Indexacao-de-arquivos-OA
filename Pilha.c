@@ -1,14 +1,27 @@
-/*	Pilha estatica*/
+#include "Pilha.h"
+#include <stdlib.h>
 
-struct Pilha
-{
-	int qtd;
-	int nrr[20];
-};
-typedef strct Pilha Pilha;
+/*	Funcoes Pilha*/
 
+Pilha * CriaPilha(){
+	Pilha *pi;
+	pi = (Pilha*) malloc(sizeof(Pilha));
+	pi->qtd = 0;
+	return pi;
+}
 
+void InserePilha(Pilha *pi, int p){
 
-Pilha * CriaPilha();
-void InserePilha(Pilha *pi, int p);
-int RemovePilha(Pilha *pi);
+	/*	Pode estar cheia ou pi == null*/
+	pi->nrr[pi->qtd] = p;
+	pi->qtd++;
+}
+
+int RemovePilha(Pilha *pi){
+
+	int topo = pi->nrr[pi->qtd-1];
+
+	pi->qtd--;
+
+	return topo;
+}

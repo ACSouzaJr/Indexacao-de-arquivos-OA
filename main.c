@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Dados.h"
+#include "Pilha.h"
+#include "index.h"
+#include "esqueleto.h"
 
 
 
@@ -13,12 +17,12 @@ int main(int argc, char const *argv[])
 	/*	Criar Indice 	*/
 	/*	Indices sao arrays de struct*/
 
-	Index *indice = CriaIndex();
+	Pilha *PED = CriaPilha();
+	Index *index = CriaIndex();
 
-	for (int i = 0; i < indice->tamanho; ++i)
-	{
+	CriarIndice(index);
 
-	}
+
 
 	while( 1 ){
 
@@ -32,7 +36,8 @@ int main(int argc, char const *argv[])
 		printf("***********************************\n");
 
 		int escolha;
-		scanf("%d", escolha);
+		scanf("%d", &escolha);
+		getchar();
 
 		/*	Req 3) Regravar indece apos manipulacao*/
 
@@ -40,12 +45,28 @@ int main(int argc, char const *argv[])
 
 			case 1:
 				/*	Req 4) Incluasao registro*/
-				Inclusao();
+				registro_aluno registro;
+
+				/*	Forma melhor de pegar registros
+				fgets(registro.matric, 6, stdin);
+				fgets(registro.nome, 40, stdin);
+				fgets(registro.op, 5, stdin);
+				fgets(registro.curso, 9, stdin);
+				fgets(registro.turma, 2, stdin);
+				*/
+				gets(registro.matric);
+				gets(registro.nome);
+				gets(registro.op);
+				gets(registro.curso);
+				gets(registro.turma);
+
+				Inclusao(registro, index, PED);
+
 				break;
 
 			case 2:
 				/*	Req 5) Excluir registro*/
-				Exclusao();
+				//Exclusao();
 				break;
 
 			case 3:
@@ -53,16 +74,18 @@ int main(int argc, char const *argv[])
 				*	Muda chave primaria
 				*	nao muda chave primaria
 				*/
-				Atualizacao();	/*	Faco nem ideia como fazer */
+				//Atualizacao();	/*	Faco nem ideia como fazer */
 				break;
 
 			case 4:
 				return 0;
+				break;
 
 			default:
 				printf("Nao tem essa opcao\n");
 
 
+		fflush(stdin);
 		}/*	Fim switch*/
 	}/*	fim while*/
 

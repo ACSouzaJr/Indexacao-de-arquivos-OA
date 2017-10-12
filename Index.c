@@ -1,22 +1,28 @@
 #include <Dados.h>
 #include <stdlib.h>
+#include "index.h"
 
-Index* criaIndex(){
+
+
+
+Index* CriaIndex(){
     Index *index;
     index = (Index*) malloc(sizeof(Index));
     index->tamanho = 0;
     index->flag_atualizacao = 0;
+
+    return index;
 }
 
 
-int insereIndex(Index *index, struct IndicePrimario indice){
+void InsereIndex(Index *index, struct IndicePrimario indice){
 
     index->indice_primario[index->tamanho] = indice;
 
     index->tamanho++;
 }
 
-int removeIndex(Index *index, int posicao){
+void RemoveIndex(Index *index, int posicao){
 
     for (int i = posicao+1; i < index->tamanho; ++i)
         index[i-1] = index[i];
