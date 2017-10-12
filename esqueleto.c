@@ -13,6 +13,8 @@
 void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 	/*	Checar se houve mudancas anteriormente*/
+	FILE *fp;
+
 	if ( PED->qtd != 0){
 
 	/*	Caso tenha ocorrido remocoes */
@@ -23,20 +25,11 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 		*/
 
 		/*	Registro*/
-		FILE *fp;
 
 		int nrr = RemovePilha(PED);
 
 		fp = fopen("lista1.txt", "a");
 		fseek(fp, nrr*sizeof(registro), SEEK_SET);
-
-		fprintf(fp, "%s\t", registro.matric);
-		fprintf(fp, "%s\t", registro.nome);
-		fprintf(fp, "%s\t", registro.op);
-		fprintf(fp, "%s\t", registro.curso);
-		fprintf(fp, "%s\t", registro.turma);
-
-		fclose(fp);
 
 	}else{
 
@@ -49,17 +42,17 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 
 		/*	Registro*/
-		FILE *fp;
 		fp = fopen("lista1.txt", "a");
+	}
 
-		fprintf(fp, "%s\t", registro.matric);
-		fprintf(fp, "%s\t", registro.nome);
-		fprintf(fp, "%s\t", registro.op);
-		fprintf(fp, "%s\t", registro.curso);
-		fprintf(fp, "%s\t", registro.turma);
+		/*	Escrita no arquivo*/
+		fprintf(fp, "%-6.6s ", registro.matric);
+		fprintf(fp, "%-40.40s ", registro.nome);
+		fprintf(fp, "%-5.5s ", registro.op);
+		fprintf(fp, "%-9.9s ", registro.curso);
+		fprintf(fp, "%-2.2s\n", registro.turma);
 
 		fclose(fp);
-	}
 
 		/* Indice Primario*/
 		/*  Cria chave primaria*/	//fazer funcao cria indice primerio
