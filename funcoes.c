@@ -24,7 +24,7 @@ void AtualizaIndice( const char *arquivo, Index *index ){
 	for ( int i = 0; i < tamanho; ++i )
 	{
 		//fwrite(&Index[i]->chave_primaria, sizeof(indice_primario), 1, fp);
-		fprintf( fp, "%s\t", index->indice_primario[i].chave_primaria );
+		fprintf( fp, "%-30.30s\t", index->indice_primario[i].chave_primaria );
 		fprintf( fp, "%d\n", index->indice_primario[i].nrr );
 	}
 
@@ -44,7 +44,7 @@ void CriarIndice(Index *index){
     registro_aluno registro;
     struct IndicePrimario indice;
 
-    int i = 1;
+    int i = 0;
     while( !feof(fp) ){
 
         fread(&registro.matric, sizeof(char), 7, fp);

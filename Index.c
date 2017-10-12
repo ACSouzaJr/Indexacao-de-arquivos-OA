@@ -25,7 +25,7 @@ void InsereIndex(Index *index, struct IndicePrimario indice){
 void RemoveIndex(Index *index, int posicao){
 
     for (int i = posicao+1; i < index->tamanho; ++i)
-        index[i-1] = index[i];
+        index->indice_primario[i-1] = index->indice_primario[i];
 
     index->tamanho--;
 
