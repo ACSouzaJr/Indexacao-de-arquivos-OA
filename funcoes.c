@@ -81,13 +81,17 @@ void CriarIndice(Index *index, VetorRegistro *v_registro){
         strncat(indice.chave_primaria, registro.nome, 24);
         indice.nrr = i;
 
+        /*  Insere index primario*/
         InsereIndex(index, indice);
+        /*  Insere vetor registro*/
         InsereVRegistro(v_registro, registro);
+
+        /*  Insere index secundario*/
+        //InsereIndexSec();
 
         printf("%s\n", indice.chave_primaria);
 
         ++i;
-
 
     }
 

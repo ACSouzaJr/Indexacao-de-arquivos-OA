@@ -72,13 +72,13 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 		InsereIndex(index, indice);
 		HeapSort(index);
 
-		/*	Indice Secundario*/
-		//InsereIndexSec(indexsec, indice_sec);
-		//HeapSort(indexsec);
-
 		//mostrar registro e index apos modificacao
 
 		AtualizaIndice("indicelista1.ind", index);
+
+		/*	Indice Secundario*/
+		//InsereIndexSec(indexsec, indice_sec);
+		//HeapSort(indexsec);
 
 		//Como lidar corretamente com as flags_atuaização
 }
@@ -129,7 +129,7 @@ void Exclusao(Index *index, Pilha *pi, VetorRegistro *v_registro){
 	AtualizaIndice("indicelista1.ind", index);
 
 	/*	Indice secundario*/
-		//precisa remover o indice secundario.
+		//removeIndexSec(indexsec, indice_sec);//baseado na chave primaria
 
 }
 
@@ -223,16 +223,31 @@ void Atualizacao(Index *index, VetorRegistro *v_registro){
 			case 3:
 			/*	Mudar o vetor de registro*/
 			/*	Lista invertida*/
+				//removeIndexSec();
+				//adiconasec();
+				//HeapSort();
 			/*	Mudanca no arquivo de registros*/
+				fp = fopen("lista1.txt", "r+");
+				fseek(fp, nrr*68+48, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+				fprintf(fp, "%-5.5s", dado);
+				fclose(fp);
 				break;
 			case 4:
 			/*	Mudar o vetor de registro*/
 			/*	Mudanca no arquivo de registros*/
+				fp = fopen("lista1.txt", "r+");
+				fseek(fp, nrr*68+54, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+				fprintf(fp, "%-9.9s", dado);
+				fclose(fp);
 				break;
 			case 5:
 			/*	Mudar o vetor de registro*/
 			/*	Lista invertida*/
 			/*	Mudanca no arquivo de registros*/
+				fp = fopen("lista1.txt", "r+");
+				fseek(fp, nrr*68+64, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+				fprintf(fp, "%-2.2s", dado);
+				fclose(fp);
 				break;
 			default:
 				printf("NAo tem esse campo\n");
