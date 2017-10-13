@@ -5,7 +5,7 @@
 #include "index.h"
 #include "esqueleto.h"
 
-
+/*	Como recuperar os dados quando o programa é reaberto*/
 
 int main(int argc, char const *argv[])
 {
@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
 
 			case 2:
 				/*	Req 5) Excluir registro*/
-				//Exclusao();
+				Exclusao(index, PED);
 				break;
 
 			case 3:

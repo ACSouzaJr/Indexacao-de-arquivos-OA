@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Dados.h"
 #include "Pilha.h"
-#include <string.h>
 #include "index.h"
 #include "lista.h"
 
@@ -29,8 +29,15 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 		int nrr = RemovePilha(PED);
 
-		fp = fopen("lista1.txt", "a");
-		fseek(fp, nrr*sizeof(registro), SEEK_SET);
+		fp = fopen("lista1.txt", "r+");
+		fseek(fp, nrr*68, SEEK_SET);
+
+		/*	Escrita no arquivo*/
+		fprintf(fp, "%-6.6s ", registro.matric);
+		fprintf(fp, "%-40.40s ", registro.nome);
+		fprintf(fp, "%-5.5s ", registro.op);
+		fprintf(fp, "%-9.9s ", registro.curso);
+		fprintf(fp, "%-2.2s", registro.turma);
 
 	}else{
 
@@ -44,14 +51,15 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 		/*	Registro*/
 		fp = fopen("lista1.txt", "a");
-	}
-
 		/*	Escrita no arquivo*/
 		fprintf(fp, "%-6.6s ", registro.matric);
 		fprintf(fp, "%-40.40s ", registro.nome);
 		fprintf(fp, "%-5.5s ", registro.op);
 		fprintf(fp, "%-9.9s ", registro.curso);
 		fprintf(fp, "%-2.2s\n", registro.turma);
+
+	}
+
 
 		fclose(fp);
 
@@ -76,7 +84,7 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 }
 
 
-//void Exclusao(Index *index, Pilha *pi){
+void Exclusao(Index *index, Pilha *pi){
 
 	/*
 	*	Remove, adicionando flag de remoçao -> empilha PED
@@ -84,27 +92,36 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 	*	flag de atualizacao ?
 	*/
 
+	/*	vetor com todos os registros inicialmente para mostrar na tela
+	*	como forma de achar a chave primaria
+	*/
+
+	//mostrar opcoes
+	int opcao;
+	scanf("%d", &opcao);
 
 	/* Indice Primario*/
-//	chave_primaria_pos = BuscaBinaria( index->chave_primaria[], index, 0, index->tamanho-1);
-//	removeindex(index, chave_primaria_pos);
+	int chave_primaria_pos = buscabinaria( index->indice_primario[opcao-1].chave_primaria, index, 0, index->tamanho-1 );
+	int nrr = index->indice_primario[chave_primaria_pos].nrr; //posiçao relativa do resgistro.
+
+	RemoveIndex(index, chave_primaria_pos);
 
 	/*	Registro*/	//->entra dentro do arquivo e adiciona flag de remoção
-//	int nrr = index[chave_primaria_pos].nrr //posiçao relativa do resgistro. 1 registro possui 67 chars
-//	FILE *fp;
-//	fp = fopen("resgistro", "a");
-//	fseek(fp, nrr*sizeof(registro), SEEK_SET);//A partir do começo
-//	fprintf(fp, "*");
-//	fclose(fp);
 
-//	InserePilha(pi, nrr);
+	FILE *fp;
+	fp = fopen("lista1.txt", "r+");
+	fseek(fp, nrr*68, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+	fprintf(fp, "*");
+	fclose(fp);
 
-//	AtualizaIndice("arquivo", index);
+	InserePilha(pi, nrr);
+
+	AtualizaIndice("arquivo", index);
 
 	/*	Indice secundario*/
 		//precisa remover o indice secundario.
 
-//}
+}
 
 /*	Remove elemento do vetor
 void remover (int posicao, int vetor[])
