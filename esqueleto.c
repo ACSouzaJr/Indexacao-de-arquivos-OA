@@ -11,7 +11,7 @@
 /*
 *	Index e o vetor de indices. Criar indicador de atualizacao?
 */
-void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
+void Inclusao(registro_aluno registro, Index1 *index, Pilha *PED){
 
 	/*	Checar se houve mudancas anteriormente*/
 	FILE *fp;
@@ -84,7 +84,7 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 }
 
 
-void Exclusao(Index *index, Pilha *pi){
+void Exclusao(Index1 *index, Pilha *pi){
 
 	/*
 	*	Remove, adicionando flag de remoçao -> empilha PED

@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
 	/*	Indices sao arrays de struct*/
 
 	Pilha *PED = CriaPilha();
-	Index *index = CriaIndex();
+	Index1 *index = CriaIndex();
 
 	CriarIndice(index);
 
