@@ -4,8 +4,9 @@
 #include "Pilha.h"
 #include <string.h>
 #include "index.h"
+#include "lista.h"
 
-/*	Falta comentar sobre os indeces secundarios*/
+/*	Falta comentar sobre os indices secundarios*/
 
 /*
 *	Index e o vetor de indices. Criar indicador de atualizacao?
@@ -105,7 +106,7 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 
 //}
 
-/*	Remove elemeno do vetor
+/*	Remove elemento do vetor
 void remover (int posicao, int vetor[])
 {
 

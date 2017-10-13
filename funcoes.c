@@ -10,7 +10,7 @@
 *	Apaga o arquivo e reescreve
 */
 
-void AtualizaIndice( const char *arquivo, Index *index ){
+void AtualizaIndice( const char *arquivo, Index1 *index ){
 
 	FILE *fp;
 
@@ -33,9 +33,9 @@ void AtualizaIndice( const char *arquivo, Index *index ){
 
 
 
-void CriarIndice(Index *index){
+void CriarIndice(Index1 *index){
 
-	 FILE *fp;
+	FILE *fp;
 
     fp = fopen( "lista1.txt", "r" );
 
@@ -93,6 +93,5 @@ void CriarIndice(Index *index){
     fclose(fp);
 
     AtualizaIndice("indicelista1.ind", index);
-
 
 }

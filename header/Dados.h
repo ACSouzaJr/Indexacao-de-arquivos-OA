@@ -41,8 +41,7 @@ struct Index
 
 };
 
-typedef struct Index Index;
-
+typedef struct Index Index1;
 
 /*
 *	op	(chave)-> indice secundario
@@ -64,6 +63,8 @@ struct IndexSec
     bool flag_atualizacao;
     struct IndiceSecundario indice_sec[100];
 };
+
+typedef struct IndexSec Index2;
 
 /*if(chave_secundaria == buscabinaria(arquivo))
     vet[]<<chave_primaria

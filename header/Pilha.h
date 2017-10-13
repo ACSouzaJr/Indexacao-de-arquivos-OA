@@ -12,3 +12,4 @@ typedef struct Pilha Pilha;
 Pilha * CriaPilha();
 void InserePilha(Pilha *pi, int p);
 int RemovePilha(Pilha *pi);
+
