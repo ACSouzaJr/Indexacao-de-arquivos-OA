@@ -19,8 +19,9 @@ int main(int argc, char const *argv[])
 
 	Pilha *PED = CriaPilha();
 	Index *index = CriaIndex();
+	VetorRegistro *v_registro = CriaVRegistro();
 
-	CriarIndice(index);
+	CriarIndice(index, v_registro);
 
 
 
@@ -60,13 +61,16 @@ int main(int argc, char const *argv[])
 				gets(registro.curso);
 				gets(registro.turma);
 
+				//mostrar antes da modificacao
+				InsereVRegistro(v_registro, registro);
+
 				Inclusao(registro, index, PED);
 
 				break;
 
 			case 2:
 				/*	Req 5) Excluir registro*/
-				Exclusao(index, PED);
+				Exclusao(index, PED, v_registro);
 				break;
 
 			case 3:
@@ -74,7 +78,7 @@ int main(int argc, char const *argv[])
 				*	Muda chave primaria
 				*	nao muda chave primaria
 				*/
-				//Atualizacao();	/*	Faco nem ideia como fazer */
+				Atualizacao(index, v_registro);	/*	Faco nem ideia como fazer */
 				break;
 
 			case 4:

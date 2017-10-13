@@ -76,6 +76,7 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 		//InsereIndexSec(indexsec, indice_sec);
 		//HeapSort(indexsec);
 
+		//mostrar registro e index apos modificacao
 
 		AtualizaIndice("indicelista1.ind", index);
 
@@ -83,7 +84,7 @@ void Inclusao(registro_aluno registro, Index *index, Pilha *PED){
 }
 
 
-void Exclusao(Index *index, Pilha *pi){
+void Exclusao(Index *index, Pilha *pi, VetorRegistro *v_registro){
 
 	/*
 	*	Remove, adicionando flag de remoçao -> empilha PED
@@ -95,12 +96,22 @@ void Exclusao(Index *index, Pilha *pi){
 	*	como forma de achar a chave primaria
 	*/
 
-	//mostrar opcoes
+	/*	Mostrar vetor registros*/
+	Mostra_Registro(v_registro);
+
 	int opcao;
 	scanf("%d", &opcao);
 
+	/*	Deduzir a chave primaria do indice*/
+	char chave_primaria[30];
+	strcpy(chave_primaria, v_registro->registro[opcao-1].matric);
+    strncat(chave_primaria, v_registro->registro[opcao-1].nome, 24);
+
+    RemoveVRegistro(v_registro, opcao-1);
+
+
 	/* Indice Primario*/
-	int chave_primaria_pos = buscabinaria( index->indice_primario[opcao-1].chave_primaria, index, 0, index->tamanho-1 );
+	int chave_primaria_pos = buscabinaria( chave_primaria, index, 0, index->tamanho-1 );
 	int nrr = index->indice_primario[chave_primaria_pos].nrr; //posiçao relativa do resgistro.
 
 	RemoveIndex(index, chave_primaria_pos);
@@ -115,31 +126,15 @@ void Exclusao(Index *index, Pilha *pi){
 
 	InserePilha(pi, nrr);
 
-	AtualizaIndice("arquivo", index);
+	AtualizaIndice("indicelista1.ind", index);
 
 	/*	Indice secundario*/
 		//precisa remover o indice secundario.
 
 }
 
-/*	Remove elemeno do vetor
-void remover (int posicao, int vetor[])
-{
 
-   tamanho = sizeof(vetor) / sizeof(vetor[0]);
-
-   for (int i = posicao+1; i < tamanho; ++i)
-   		vetor[i-1] = vetor[j];
-
-}
-
-*/
-
-
-
-
-
-//void Atualizacao(){
+void Atualizacao(Index *index, VetorRegistro *v_registro){
 	/*	Utilizar a chave primaria*/
 
 	/*	Checar se muda chave primaria*/
@@ -150,22 +145,111 @@ void remover (int posicao, int vetor[])
 		*	exclusao e adicao do index
 		*/
 
-		/*	mostrar registro*/
+		/*	Mostrar vetor registros*/
+		Mostra_Registro(v_registro);
 
-		/*	Indice*/
-		//int matricula;
+		int opcao;
+		scanf("%d", &opcao);
 
-//		printf("Qual a :\n");
-//		scanf("%d", matricula);
+		/*	Deduzir a chave primaria do indice*/
+		char chave_primaria[30];
+		strcpy(chave_primaria, v_registro->registro[opcao-1].matric);
+	    strncat(chave_primaria, v_registro->registro[opcao-1].nome, 24);
 
-//		int chave_primaria_pos = BuscaBinaria(chave_primaria);
-//		RemoveIndex(index, chave_primaria_pos);
+	    /*	posicao do registro na index*/
+		int chave_primaria_pos = buscabinaria( chave_primaria, index, 0, index->tamanho-1 );
+		int nrr = index->indice_primario[chave_primaria_pos].nrr; //posiçao relativa do resgistro.
+		struct IndicePrimario indice_primario;
+		indice_primario.nrr = nrr;
+
+	    /*	Escolha do campo*/
+	    int campo;
+	    char dado[50];
+		printf("Qual o campo?\n");
+		scanf("%d",&campo);
+		getchar();
+		printf("Novo dado\n");
+		gets(dado);
+
+		char chave_primaria_nova[30];
+				FILE *fp;
+
+		switch(campo){
+
+			case 1:
+			/*	Mudar o vetor de registro*/
+				strcat(v_registro->registro[opcao-1].matric, dado);
+			/*	Muda index -> geracao de chave primaria*/
+				/* Indice Primario*/
+				RemoveIndex(index, chave_primaria_pos);
+
+				/*	gera novo indice a partir da posicao do registro*/
+				strcpy(chave_primaria, v_registro->registro[opcao-1].matric);
+	    		strncat(chave_primaria, v_registro->registro[opcao-1].nome, 24);
+
+				strcat(indice_primario.chave_primaria, chave_primaria_nova);
+
+				InsereIndex(index, indice_primario);
+				HeapSort(index);
+
+			/*	Mudanca no arquivo de registros*/
+				fp = fopen("lista1.txt", "r+");
+				fseek(fp, nrr*68+0, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+				fprintf(fp, "%-6.6s", dado);
+				fclose(fp);
+				break;
+
+			case 2:
+			/*	Mudar o vetor de registro*/
+				strcat(v_registro->registro[opcao-1].nome, dado);
+			/*	Muda index -> geracao de chave primaria*/
+				/* Indice Primario*/
+				RemoveIndex(index, chave_primaria_pos);
+
+				strcpy(chave_primaria, v_registro->registro[opcao-1].matric);
+	    		strncat(chave_primaria, v_registro->registro[opcao-1].nome, 24);
+
+				strcat(indice_primario.chave_primaria, chave_primaria_nova);
+
+				InsereIndex(index, indice_primario);
+				HeapSort(index);
+			/*	Mudanca no arquivo de registros*/
+				fp = fopen("lista1.txt", "r+");
+				fseek(fp, nrr*68+7, SEEK_SET);//A partir do começo //1 registro possui 68 chars
+				fprintf(fp, "%-40.40s", dado);
+				fclose(fp);
+				break;
+
+			case 3:
+			/*	Mudar o vetor de registro*/
+			/*	Lista invertida*/
+			/*	Mudanca no arquivo de registros*/
+				break;
+			case 4:
+			/*	Mudar o vetor de registro*/
+			/*	Mudanca no arquivo de registros*/
+				break;
+			case 5:
+			/*	Mudar o vetor de registro*/
+			/*	Lista invertida*/
+			/*	Mudanca no arquivo de registros*/
+				break;
+			default:
+				printf("NAo tem esse campo\n");
+				break;
+
+		}
+
+		AtualizaIndice("indicelista1.ind", index);
+
+		//int chave_primaria_pos = BuscaBinaria(chave_primaria);
+		//RemoveIndex(index, chave_primaria_pos);
 
 		/*	Informar nova chave primaria*/
 		//fazer nova chave
 
-//		InsereIndex(index, chave_primaria);
-//		HeapSort(index);
+		//InsereIndex(index, chave_primaria);
+		//HeapSort(index);
 
 		/* Registro*/
 
@@ -176,7 +260,7 @@ void remover (int posicao, int vetor[])
 	/*	Se nao mudar chave primaria*/
 		/*	Fazer alteracao no campo*/
 
-//}
+}
 
 
 	/*	informa o registro a ser modificado*/
@@ -189,12 +273,3 @@ void remover (int posicao, int vetor[])
 	2
 	3
 */
-
-
-
-
-
-
-
-
-

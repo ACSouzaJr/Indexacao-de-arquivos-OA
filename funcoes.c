@@ -33,7 +33,7 @@ void AtualizaIndice( const char *arquivo, Index *index ){
 
 
 
-void CriarIndice(Index *index){
+void CriarIndice(Index *index, VetorRegistro *v_registro){
 
 	 FILE *fp;
 
@@ -82,6 +82,7 @@ void CriarIndice(Index *index){
         indice.nrr = i;
 
         InsereIndex(index, indice);
+        InsereVRegistro(v_registro, registro);
 
         printf("%s\n", indice.chave_primaria);
 

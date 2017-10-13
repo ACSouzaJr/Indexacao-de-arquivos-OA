@@ -19,6 +19,15 @@ struct Registro
 
 typedef struct Registro registro_aluno;
 
+struct ConjuntoRegistro
+{
+    int tamanho;
+    registro_aluno registro[100];
+};
+
+typedef struct ConjuntoRegistro VetorRegistro;
+
+
 /*
 *	matric + nome = 30 char (chave)
 *	referencia ao registro (referencia)
@@ -74,7 +83,7 @@ struct IndexSec
 /*  Declaracao de funcoes*/
 
 /*  funcoes.c*/
-void CriarIndice(Index *index);
+void CriarIndice(Index *index, VetorRegistro *v_registro);
 void AtualizaIndice( const char *arquivo, Index *Index );
 
 /*  Heap*/
