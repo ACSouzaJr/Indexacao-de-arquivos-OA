@@ -125,6 +125,7 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 	Mostra_Registro(v_registro);
 	Mostra_Index(index);
 
+	printf("\nEscolha o numero do registro a ser removido:\n");
 	int opcao;
 	scanf("%d", &opcao);
 
@@ -184,6 +185,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 		/*	Mostrar vetor registros*/
 		Mostra_Registro(v_registro);
 
+		printf("\nEscolha o numero do registro a ser atualizado:\n");
 		int opcao;
 		scanf("%d", &opcao);
 
@@ -207,12 +209,12 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 	    int campo;
 	    char dado[50];
 	    /*	Menu escolha do campo*/
-		printf("Qual o campo?\n");
+		printf("\nQual o campo a ser alterado?\n");
 		scanf("%d",&campo);
 		getchar();
 
-		printf("Novo dado\n");
-		gets(dado);
+		printf("\nEscreva o valor do novo dado:\n");
+		scanf("%s", dado);
 
 		char chave_primaria_nova[30];
 		FILE *fp;
