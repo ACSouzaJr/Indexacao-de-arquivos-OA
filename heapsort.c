@@ -15,9 +15,9 @@ void HeapSort( Index1 vetor[]){
     for ( int i = tamanho-1; i>=0; --i ) //i - indice
     {
         //swap
-        strcpy(aux.chave_primaria, vetor->indice_primario[0].chave_primaria);
-        strcpy(vetor->indice_primario[0].chave_primaria, vetor->indice_primario[i].chave_primaria);
-        strcpy(vetor->indice_primario[i].chave_primaria, aux.chave_primaria);
+        aux = vetor->indice_primario[0];
+        vetor->indice_primario[0] = vetor->indice_primario[i];
+        vetor->indice_primario[i] = aux;
 
         Heapify( vetor, 0, i );
     }
@@ -47,9 +47,9 @@ void Heapify( Index1 vetor[], int i, int tamanho ){
 
     if ( maior != i ){
         //swap
-        strcpy(aux.chave_primaria, vetor->indice_primario[i].chave_primaria);
-        strcpy(vetor->indice_primario[i].chave_primaria, vetor->indice_primario[maior].chave_primaria);
-        strcpy(vetor->indice_primario[maior].chave_primaria, aux.chave_primaria);
+        aux = vetor->indice_primario[i];
+        vetor->indice_primario[i] = vetor->indice_primario[maior];
+        vetor->indice_primario[maior] = aux;
 
         Heapify( vetor, maior, tamanho );
 
@@ -67,9 +67,9 @@ void HeapSortsec( Index2 vetor[]){
     for ( int i = tamanho-1; i>=0; --i ) //i - indice
     {
         //swap
-        strcpy(aux.chave_primaria, vetor->indice_secundario[0].chave_primaria);
-        strcpy(vetor->indice_secundario[0].chave_primaria, vetor->indice_secundario[i].chave_primaria);
-        strcpy(vetor->indice_secundario[i].chave_primaria, aux.chave_primaria);
+        aux = vetor->indice_secundario[0];
+        vetor->indice_secundario[0] = vetor->indice_secundario[i];
+        vetor->indice_secundario[i] = aux;
 
         Heapifysec( vetor, 0, i );
     }
@@ -89,7 +89,7 @@ void Heapifysec( Index2 vetor[], int i, int tamanho ){
     int esquerda = 2*i+1;
     int direita = 2*i+2;
     int maior = i;
-    struct IndicePrimario aux;
+    struct IndiceSecundario aux;
 
     if ( esquerda < tamanho && strcmp(vetor->indice_secundario[esquerda].chave_primaria, vetor->indice_secundario[maior].chave_primaria) > 0)
         maior = esquerda;
@@ -99,9 +99,9 @@ void Heapifysec( Index2 vetor[], int i, int tamanho ){
 
     if ( maior != i ){
         //swap
-        strcpy(aux.chave_primaria, vetor->indice_secundario[i].chave_primaria);
-        strcpy(vetor->indice_secundario[i].chave_primaria, vetor->indice_secundario[maior].chave_primaria);
-        strcpy(vetor->indice_secundario[maior].chave_primaria, aux.chave_primaria);
+        aux = vetor->indice_secundario[i];
+        vetor->indice_secundario[i] = vetor->indice_secundario[maior];
+        vetor->indice_secundario[maior] = aux;
 
         Heapifysec( vetor, maior, tamanho );
 

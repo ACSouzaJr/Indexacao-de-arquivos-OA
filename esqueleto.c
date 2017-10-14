@@ -4,7 +4,6 @@
 #include "Dados.h"
 #include "Pilha.h"
 #include "index.h"
-#include "lista.h"
 
 /*	Falta comentar sobre os indices secundarios*/
 /*	Refatorar repeticoes no codigo*/
@@ -16,6 +15,8 @@ void Inclusao(registro_aluno registro, Index1 *index, Index2 *index2_op, Index2 
 
 	/*	Checar se houve mudancas anteriormente*/
 	FILE *fp;
+
+	struct IndicePrimario indice;
 
 	if ( PED->qtd != 0){
 
@@ -29,6 +30,7 @@ void Inclusao(registro_aluno registro, Index1 *index, Index2 *index2_op, Index2 
 		/*	Registro*/
 
 		int nrr = RemovePilha(PED);
+		indice.nrr = nrr;
 
 		fp = fopen("lista1.txt", "r+");
 		fseek(fp, nrr*68, SEEK_SET);
@@ -53,11 +55,12 @@ void Inclusao(registro_aluno registro, Index1 *index, Index2 *index2_op, Index2 
 		/*	Registro*/
 		fp = fopen("lista1.txt", "a");
 		/*	Escrita no arquivo*/
-		fprintf(fp, "%-6.6s ", registro.matric);
+		fprintf(fp, "\n%-6.6s ", registro.matric);
 		fprintf(fp, "%-40.40s ", registro.nome);
 		fprintf(fp, "%-5.5s ", registro.op);
 		fprintf(fp, "%-9.9s ", registro.curso);
-		fprintf(fp, "%-2.2s\n", registro.turma);
+		fprintf(fp, "%-2.2s\r", registro.turma);
+        indice.nrr = index->tamanho;
 
 	}
 
@@ -66,34 +69,36 @@ void Inclusao(registro_aluno registro, Index1 *index, Index2 *index2_op, Index2 
 
 		/* Indice Primario*/
 		/*  Cria chave primaria*/	//fazer funcao cria indice primerio
-		struct IndicePrimario indice;
-        strcpy(indice.chave_primaria, registro.matric);
-        strncat(indice.chave_primaria, registro.nome, 24);
-        indice.nrr = index->tamanho+1;
+		char chave_primaria[31];
+        strcpy(chave_primaria, registro.matric);
+        strncat(chave_primaria, registro.nome, 24);
+
+        strcpy(indice.chave_primaria, chave_primaria);
 
 		InsereIndex(index, indice);
 		HeapSort(index);
 
-		//mostrar registro e index apos modificacao
-
-		AtualizaIndice("indicelista1.ind", index);
 
  		/*  Insere index secundario*/
  		struct IndiceSecundario indice_secundario;
         /*  OP*/
-        strcpy(indice_secundario.chave_primaria, registro.matric);
-        strncat(indice_secundario.chave_primaria, registro.nome, 24);
         strcpy(indice_secundario.chave_secundaria, registro.op);
+        strcpy(indice_secundario.chave_primaria, chave_primaria);
+        //strncat(indice_secundario.chave_primaria, registro.nome, 24);
         InsereIndexSecundario(index2_op, indice_secundario);
 
         /*  Turma*/
-        strcpy(indice_secundario.chave_primaria, registro.matric);
-        strncat(indice_secundario.chave_primaria, registro.nome, 24);
         strcpy(indice_secundario.chave_secundaria, registro.turma);
+        strcpy(indice_secundario.chave_primaria, chave_primaria);
+        //strncat(indice_secundario.chave_primaria, registro.nome, 24);
         InsereIndexSecundario(index2_turma, indice_secundario);
 
         HeapSortsec(index2_op);
         HeapSortsec(index2_turma);
+
+		/*mostrar registro e index apos modificacao*/
+
+		AtualizaIndice("indicelista1.ind", index);
 
         /*	Atualiza indeice secundario*/
         AtualizaIndiceSec("OP.ind", index2_op);
@@ -162,6 +167,7 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 
 }
 
+/*	Falta arrumar indices secundarios*/
 void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRegistro *v_registro){
 	/*	Utilizar a chave primaria*/
 
