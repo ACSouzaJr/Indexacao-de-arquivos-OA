@@ -59,11 +59,16 @@ int main(int argc, char const *argv[])
 				fgets(registro.curso, 9, stdin);
 				fgets(registro.turma, 2, stdin);
 				*/
-				gets(registro.matric);
-				gets(registro.nome);
-				gets(registro.op);
-				gets(registro.curso);
-				gets(registro.turma);
+				printf("Qual é a matrícula do novo aluno?\n");
+				scanf("%s", registro.matric);
+				printf("Qual é o nome do novo aluno?\n");
+				scanf("%s", registro.nome);
+				printf("Qual é o OP do novo aluno?\n");
+				scanf("%s", registro.op);
+				printf("Qual é o curso do novo aluno?\n");
+				scanf("%s", registro.curso);
+				printf("Qual é a turma do novo aluno?\n");
+				scanf("%s", registro.turma);
 
 				//mostrar antes da modificacao
 				InsereVRegistro(v_registro, registro);
@@ -74,7 +79,9 @@ int main(int argc, char const *argv[])
 
 			case 2:
 				/*	Req 5) Excluir registro*/
+
 				Exclusao(index, index2_op, index2_turma, PED, v_registro);
+				
 				break;
 
 			case 3:
