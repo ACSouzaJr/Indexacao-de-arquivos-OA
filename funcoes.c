@@ -10,7 +10,7 @@
 *	Apaga o arquivo e reescreve
 */
 
-void AtualizaIndice( const char *arquivo, Index *index ){
+void AtualizaIndice( const char *arquivo, Index1 *index ){
 
 	FILE *fp;
 
@@ -23,7 +23,6 @@ void AtualizaIndice( const char *arquivo, Index *index ){
 	/*lista cresce verticalmente*/
 	for ( int i = 0; i < tamanho; ++i )
 	{
-		//fwrite(&Index[i]->chave_primaria, sizeof(indice_primario), 1, fp);
 		fprintf( fp, "%-30.30s\t", index->indice_primario[i].chave_primaria );
 		fprintf( fp, "%d\n", index->indice_primario[i].nrr );
 	}
@@ -31,18 +30,38 @@ void AtualizaIndice( const char *arquivo, Index *index ){
 	fclose(fp);
 }
 
+void AtualizaIndiceSec( const char *arquivo, Index2 *index ){
+
+    FILE *fp;
+
+    int tamanho = index->tamanho;
 
 
-void CriarIndice(Index *index, VetorRegistro *v_registro){
 
-	 FILE *fp;
+    fp = fopen( arquivo, "w" );
+
+    /*lista cresce verticalmente*/
+    for ( int i = 0; i < tamanho; ++i )
+    {
+        fprintf( fp, "%-30.30s\t", index->indice_secundario[i].chave_primaria );
+        fprintf( fp, "%s\n", index->indice_secundario[i].chave_secundaria );
+    }
+
+    fclose(fp);
+}
+
+
+
+void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRegistro *v_registro){
+
+	FILE *fp;
 
     fp = fopen( "lista1.txt", "r" );
 
-//    Index *index = CriaIndex();
 
     registro_aluno registro;
-    struct IndicePrimario indice;
+    struct IndicePrimario indice_primario;
+    struct IndiceSecundario indice_secundario;
 
     int i = 0;
     while( !feof(fp) ){
@@ -77,19 +96,30 @@ void CriarIndice(Index *index, VetorRegistro *v_registro){
 
 
         /*  Cria chave primaria*/
-        strcpy(indice.chave_primaria, registro.matric);
-        strncat(indice.chave_primaria, registro.nome, 24);
-        indice.nrr = i;
+        strcpy(indice_primario.chave_primaria, registro.matric);
+        strncat(indice_primario.chave_primaria, registro.nome, 24);
+        indice_primario.nrr = i;
 
         /*  Insere index primario*/
-        InsereIndex(index, indice);
+        InsereIndex(index, indice_primario);
         /*  Insere vetor registro*/
         InsereVRegistro(v_registro, registro);
 
         /*  Insere index secundario*/
-        //InsereIndexSec();
+        /*  OP*/
+        strcpy(indice_secundario.chave_primaria, registro.matric);
+        strncat(indice_secundario.chave_primaria, registro.nome, 24);
+        strcpy(indice_secundario.chave_secundaria, registro.op);
+        InsereIndexSecundario(index2_op, indice_secundario);
 
-        printf("%s\n", indice.chave_primaria);
+        /*  Turma*/
+        strcpy(indice_secundario.chave_primaria, registro.matric);
+        strncat(indice_secundario.chave_primaria, registro.nome, 24);
+        strcpy(indice_secundario.chave_secundaria, registro.turma);
+        InsereIndexSecundario(index2_turma, indice_secundario);
+
+
+        printf("%s\n", indice_primario.chave_primaria);
 
         ++i;
 
@@ -98,6 +128,7 @@ void CriarIndice(Index *index, VetorRegistro *v_registro){
     fclose(fp);
 
     AtualizaIndice("indicelista1.ind", index);
-
+    AtualizaIndiceSec("OP.ind", index2_op);
+    AtualizaIndiceSec("turma.ind", index2_turma);
 
 }
