@@ -19,6 +19,15 @@ struct Registro
 
 typedef struct Registro registro_aluno;
 
+struct ConjuntoRegistro
+{
+    int tamanho;
+    registro_aluno registro[100];
+};
+
+typedef struct ConjuntoRegistro VetorRegistro;
+
+
 /*
 *	matric + nome = 30 char (chave)
 *	referencia ao registro (referencia)
@@ -61,29 +70,28 @@ struct IndexSec
 {
     int tamanho;
     bool flag_atualizacao;
-    struct IndiceSecundario indice_sec[100];
+    struct IndiceSecundario indice_secundario[100];
 };
 
 typedef struct IndexSec Index2;
-
-/*if(chave_secundaria == buscabinaria(arquivo))
-    vet[]<<chave_primaria
-*/
-
 
 
 /*  Declaracao de funcoes*/
 
 /*  funcoes.c*/
-void CriarIndice(Index *index);
-void AtualizaIndice( const char *arquivo, Index *Index );
+void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRegistro *v_registro);
+void AtualizaIndice( const char *arquivo, Index1 *Index );
+void AtualizaIndiceSec( const char *arquivo, Index2 *index );
 
 /*  Heap*/
-void BuildHeap( Index vetor[], int tamanho );
-void Heapify( Index vetor[], int i, int tamanho );
-void HeapSort( Index vetor[] );
+void BuildHeap( Index1 vetor[], int tamanho );
+void Heapify( Index1 vetor[], int i, int tamanho );
+void HeapSort( Index1 vetor[] );
+
+void BuildHeapsec( Index2 vetor[], int tamanho );
+void Heapifysec( Index2 vetor[], int i, int tamanho );
+void HeapSortsec( Index2 vetor[] );
 
 /*  Busca binaria*/
-int buscabinaria(char *busca, Index vetor[], int inicio, int fim);
-
-/*  esqueleto.c*/
+int buscabinaria(char *busca, Index1 vetor[], int inicio, int fim);
+int buscabinariasec(char *busca, Index2 *vetor, int inicio, int fim);

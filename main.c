@@ -19,8 +19,12 @@ int main(int argc, char const *argv[])
 
 	Pilha *PED = CriaPilha();
 	Index1 *index = CriaIndex();
+	Index2 *index2_op = CriaIndexSecundario();
+	Index2 *index2_turma = CriaIndexSecundario();
+	VetorRegistro *v_registro = CriaVRegistro();
 
-	CriarIndice(index);
+	/*	Insercao no vetor correspondente*/
+	CriarIndice(index, index2_op, index2_turma, v_registro);
 
 
 
@@ -36,6 +40,7 @@ int main(int argc, char const *argv[])
 		printf("***********************************\n");
 
 		int escolha;
+		printf("Escolha uma operacao\n");
 		scanf("%d", &escolha);
 		getchar();
 
@@ -60,13 +65,16 @@ int main(int argc, char const *argv[])
 				gets(registro.curso);
 				gets(registro.turma);
 
-				Inclusao(registro, index, PED);
+				//mostrar antes da modificacao
+				InsereVRegistro(v_registro, registro);
+
+				Inclusao(registro, index, index2_op, index2_turma, PED);
 
 				break;
 
 			case 2:
 				/*	Req 5) Excluir registro*/
-				Exclusao(index, PED);
+				Exclusao(index, index2_op, index2_turma, PED, v_registro);
 				break;
 
 			case 3:
@@ -74,7 +82,7 @@ int main(int argc, char const *argv[])
 				*	Muda chave primaria
 				*	nao muda chave primaria
 				*/
-				//Atualizacao();	/*	Faco nem ideia como fazer */
+				Atualizacao(index, index2_op, index2_turma, v_registro);	/*	Faco nem ideia como fazer */
 				break;
 
 			case 4:
