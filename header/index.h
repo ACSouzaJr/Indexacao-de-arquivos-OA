@@ -6,6 +6,7 @@
 Index1* CriaIndex();
 void InsereIndex(Index1 *index, struct IndicePrimario indice1);
 void RemoveIndex(Index1 *index, int posicao);
+void Mostra_Index(Index1 *index);
 
 /*  Index ->secundario*/
 Index2* CriaIndexSecundario();
@@ -17,3 +18,5 @@ VetorRegistro* CriaVRegistro();
 void InsereVRegistro(VetorRegistro *index, registro_aluno indice);
 void RemoveVRegistro(VetorRegistro *index, int posicao);
 void Mostra_Registro(VetorRegistro v_registro[]);
+
+/*  */

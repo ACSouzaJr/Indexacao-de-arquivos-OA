@@ -4,6 +4,7 @@
 #include "Pilha.h"
 #include "index.h"
 #include "esqueleto.h"
+#include "funcoes.h"
 
 /*	Como recuperar os dados quando o programa é reaberto*/
 
@@ -24,7 +25,7 @@ int main(int argc, char const *argv[])
 	VetorRegistro *v_registro = CriaVRegistro();
 
 	/*	Insercao no vetor correspondente*/
-	CriarIndice(index, index2_op, index2_turma, v_registro);
+	CriarIndice(index, index2_op, index2_turma, PED, v_registro);
 
 
 

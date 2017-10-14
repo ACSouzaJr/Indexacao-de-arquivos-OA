@@ -13,34 +13,27 @@
 
 int buscabinaria(char *busca, Index1 *vetor, int inicio, int fim)
 {
-    if (strcmp(vetor->indice_primario[inicio+(fim-inicio)/2].chave_primaria, busca) == 0)
-        return inicio+(fim-inicio)/2;
-
-    else if (inicio == fim-1)
-    {
-        printf("Nao existe!\n");
-        return 0;
+    if (inicio > fim) return -1;
+    else {
+      int m = (inicio + fim)/2;
+      if (strcmp(vetor->indice_primario[m].chave_primaria, busca) == 0) return m;
+      if (strcmp(vetor->indice_primario[m].chave_primaria, busca) < 0)
+         return buscabinaria(busca, vetor, m+1, fim);
+      else
+         return buscabinaria(busca, vetor, inicio, m-1);
     }
-    else if (strcmp(vetor->indice_primario[(fim-inicio)/2].chave_primaria, busca) > 0)
-        buscabinaria(busca, vetor, inicio, fim/2);
-
-    else if (strcmp(vetor->indice_primario[inicio+(fim-inicio)/2].chave_primaria, busca) < 0)
-        buscabinaria(busca, vetor, inicio+(fim-inicio)/2, fim);
 }
+
 
 int buscabinariasec(char *busca, Index2 *vetor, int inicio, int fim)
 {
-    if (strcmp(vetor->indice_secundario[inicio+(fim-inicio)/2].chave_primaria, busca) == 0)
-        return inicio+(fim-inicio)/2;
-
-    else if (inicio == fim-1)
-    {
-        printf("Nao existe!\n");
-        return 0;
+    if (inicio > fim) return -1;
+    else {
+      int m = (inicio + fim)/2;
+      if (strcmp(vetor->indice_secundario[m].chave_primaria, busca) == 0) return m;
+      if (strcmp(vetor->indice_secundario[m].chave_primaria, busca) < 0)
+         return buscabinariasec(busca, vetor, m+1, fim);
+      else
+         return buscabinariasec(busca, vetor, inicio, m-1);
     }
-    else if (strcmp(vetor->indice_secundario[(fim-inicio)/2].chave_primaria, busca) > 0)
-        buscabinariasec(busca, vetor, inicio, fim/2);
-
-    else if (strcmp(vetor->indice_secundario[inicio+(fim-inicio)/2].chave_primaria, busca) < 0)
-        buscabinariasec(busca, vetor, inicio+(fim-inicio)/2, fim);
 }

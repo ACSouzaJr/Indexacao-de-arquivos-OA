@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Pilha.h"
 #include "Dados.h"
 #include "index.h"
+#include "funcoes.h"
 
 
 /*
@@ -51,8 +53,10 @@ void AtualizaIndiceSec( const char *arquivo, Index2 *index ){
 }
 
 
+/*  Checar se o registro possui * no comeco se sim adiciona na ped
+*/
 
-void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRegistro *v_registro){
+void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *PED, VetorRegistro *v_registro){
 
 	FILE *fp;
 
@@ -69,16 +73,15 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
     while( !feof(fp) ){
 
         fread(&registro.matric, sizeof(char), 7, fp);
-        //fgetc(fp);
         fread(&registro.nome, sizeof(char), 41, fp);
-        //fgetc(fp);
         fread(&registro.op, sizeof(char), 6, fp);
-        //fgetc(fp);
         fread(&registro.curso, sizeof(char), 10, fp);
-        //fgetc(fp);
         fread(&registro.turma, sizeof(char), 3, fp);
         fgetc(fp);
 
+        if( registro.matric[0] == '*')
+            InserePilha(PED, i);
+        else{
 
         /*  Mostrar na tela*/
         /*  Comentar matric se quiser espaco na string
@@ -125,6 +128,7 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
 
         printf("%s\n", indice_primario.chave_primaria);
+        }
 
         ++i;
 
@@ -133,7 +137,7 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
     fclose(fp);
 
     HeapSort(index);
-    HeapSortsec(index2_turma);
+    HeapSortsec(index2_op);
     HeapSortsec(index2_turma);
     AtualizaIndice("indicelista1.ind", index);
     AtualizaIndiceSec("OP.ind", index2_op);

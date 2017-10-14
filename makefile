@@ -8,7 +8,7 @@ CXXFLAGS += -g -Wall -Wextra -pthread -Weffc++
 
 MAIN = main
 
-DEPS = Dados.h Pilha.h esqueleto.h
+DEPS = Dados.h Pilha.h esqueleto.h funcoes.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 _OBJ = funcoes.o esqueleto.o Pilha.o Index.o busca_binaria.o heapsort.o main.o

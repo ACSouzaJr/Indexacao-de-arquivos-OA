@@ -86,17 +86,31 @@ void Mostra_Registro(VetorRegistro *v_registro){
     //Mostra na tela o conteudo dos registro e index
 
     printf("\n");
-    printf("MATRIC\tNOME\tOP\tCURSO\tTURMA\n");
+    printf(" \t%-6.6s %-40.40s %-5.5s %-9.9s %s\n", "MATRIC", "NOME", "OP", "CURSO", "TURMA");
 
     for (int i = 0; i < v_registro->tamanho; ++i)
     {
         printf("%d\t", i+1);
-        printf("%s\t", v_registro->registro[i].matric);
-        printf("%s\t", v_registro->registro[i].nome);
-        printf("%s\t", v_registro->registro[i].op);
-        printf("%s\t", v_registro->registro[i].curso);
-        printf("%s\n", v_registro->registro[i].turma);
+
+        printf("%-6.6s ", v_registro->registro[i].matric);
+        printf("%-40.40s ", v_registro->registro[i].nome);
+        printf("%-5.5s ", v_registro->registro[i].op);
+        printf("%-9.9s ", v_registro->registro[i].curso);
+        printf("%-2.2s\n", v_registro->registro[i].turma);
     }
 
 }
 
+void Mostra_Index(Index1 *index){
+
+
+    printf("\n");
+    printf("%-30.30s\t%s\n", "CHAVE PRIMARIA", "NRR");
+
+    for (int i = 0; i < index->tamanho; ++i)
+    {
+        printf("%-30.30s\t", index->indice_primario[i].chave_primaria);
+        printf("%d\n", index->indice_primario[i].nrr);
+    }
+
+}

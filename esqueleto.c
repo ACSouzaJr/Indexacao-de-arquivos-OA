@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Dados.h"
 #include "Pilha.h"
+#include "Dados.h"
 #include "index.h"
+#include "funcoes.h"
 
 /*	Falta comentar sobre os indices secundarios*/
 /*	Refatorar repeticoes no codigo*/
@@ -122,6 +123,7 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 
 	/*	Mostrar vetor registros*/
 	Mostra_Registro(v_registro);
+	Mostra_Index(index);
 
 	int opcao;
 	scanf("%d", &opcao);
