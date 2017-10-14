@@ -167,7 +167,7 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 
 }
 
-/*	Falta arrumar indices secundarios*/
+
 void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRegistro *v_registro){
 	/*	Utilizar a chave primaria*/
 
@@ -219,7 +219,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
 			case 1:
 			/*	Mudar o vetor de registro*/
-				strcat(v_registro->registro[opcao-1].matric, dado);
+				strcpy(v_registro->registro[opcao-1].matric, dado);
 			/*	Muda index -> geracao de chave primaria*/
 				/* Indice Primario*/
 				RemoveIndex(index, chave_primaria_pos);
@@ -233,6 +233,24 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 				InsereIndex(index, indice_primario);
 				HeapSort(index);
 
+			/*	Mudar index2*/
+				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_op, 0, index->tamanho-1 );
+				strcpy(indice_secundario.chave_secundaria, index2_op->indice_secundario[chave_secundaria_pos].chave_secundaria);
+				RemoveIndexSecundario(index2_op, chave_secundaria_pos);
+
+				strcpy(indice_secundario.chave_primaria, chave_primaria_nova);
+
+				InsereIndexSecundario(index2_op, indice_secundario);
+				HeapSortsec(index2_op);
+				/*	Turma*/
+				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_turma, 0, index->tamanho-1 );
+				strcpy(indice_secundario.chave_secundaria, index2_turma->indice_secundario[chave_secundaria_pos].chave_secundaria);
+				RemoveIndexSecundario(index2_turma, chave_secundaria_pos);
+
+				strcpy(indice_secundario.chave_primaria, chave_primaria_nova);
+
+				InsereIndexSecundario(index2_turma, indice_secundario);
+				HeapSortsec(index2_turma);
 			/*	Mudanca no arquivo de registros*/
 				fp = fopen("lista1.txt", "r+");
 				fseek(fp, nrr*68+0, SEEK_SET);//A partir do começo //1 registro possui 68 chars
@@ -242,7 +260,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
 			case 2:
 			/*	Mudar o vetor de registro*/
-				strcat(v_registro->registro[opcao-1].nome, dado);
+				strcpy(v_registro->registro[opcao-1].nome, dado);
 			/*	Muda index -> geracao de chave primaria*/
 				/* Indice Primario*/
 				RemoveIndex(index, chave_primaria_pos);
@@ -265,7 +283,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
 			case 3:
 			/*	Mudar o vetor de registro*/
-				strcat(v_registro->registro[opcao-1].op, dado);
+				strcpy(v_registro->registro[opcao-1].op, dado);
 			/*	Lista invertida*/
 				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_op, 0, index->tamanho-1 );
 				RemoveIndexSecundario(index2_op, chave_secundaria_pos);
@@ -283,7 +301,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 				break;
 			case 4:
 			/*	Mudar o vetor de registro*/
-				strcat(v_registro->registro[opcao-1].curso, dado);
+				strcpy(v_registro->registro[opcao-1].curso, dado);
 			/*	Mudanca no arquivo de registros*/
 				fp = fopen("lista1.txt", "r+");
 				fseek(fp, nrr*68+54, SEEK_SET);//A partir do começo //1 registro possui 68 chars
@@ -292,7 +310,7 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 				break;
 			case 5:
 			/*	Mudar o vetor de registro*/
-				strcat(v_registro->registro[opcao-1].turma, dado);
+				strcpy(v_registro->registro[opcao-1].turma, dado);
 			/*	Lista invertida*/
 				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_turma, 0, index->tamanho-1 );
 				RemoveIndexSecundario(index2_turma, chave_secundaria_pos);

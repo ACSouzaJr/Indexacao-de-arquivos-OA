@@ -86,6 +86,7 @@ void Mostra_Registro(VetorRegistro *v_registro){
     //Mostra na tela o conteudo dos registro e index
 
     printf("\n");
+    printf("MATRIC\tNOME\tOP\tCURSO\tTURMA\n");
 
     for (int i = 0; i < v_registro->tamanho; ++i)
     {
@@ -96,14 +97,6 @@ void Mostra_Registro(VetorRegistro *v_registro){
         printf("%s\t", v_registro->registro[i].curso);
         printf("%s\n", v_registro->registro[i].turma);
     }
-
-/*
-    for (int i = 0; i < index->tamanho; ++i)
-    {
-        printf("%s\t", index[i]->indice.chave_primaria);
-        printf("%s\n", index[i]->indice.nrr);
-    }
-*/
 
 }
 

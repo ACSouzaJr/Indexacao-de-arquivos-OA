@@ -132,6 +132,9 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
     fclose(fp);
 
+    HeapSort(index);
+    HeapSortsec(index2_turma);
+    HeapSortsec(index2_turma);
     AtualizaIndice("indicelista1.ind", index);
     AtualizaIndiceSec("OP.ind", index2_op);
     AtualizaIndiceSec("turma.ind", index2_turma);

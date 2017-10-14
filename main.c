@@ -40,6 +40,7 @@ int main(int argc, char const *argv[])
 		printf("***********************************\n");
 
 		int escolha;
+		printf("Escolha uma operacao\n");
 		scanf("%d", &escolha);
 		getchar();
 
