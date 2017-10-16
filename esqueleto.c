@@ -69,7 +69,7 @@ void Inclusao(registro_aluno registro, Index1 *index, Index2 *index2_op, Index2 
 		fclose(fp);
 
 		/* Indice Primario*/
-		/*  Cria chave primaria*/	//fazer funcao cria indice primerio
+		/*  Cria chave primaria*/
 		char chave_primaria[31];
         strcpy(chave_primaria, registro.matric);
         strncat(chave_primaria, registro.nome, 24);
@@ -123,7 +123,6 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 
 	/*	Mostrar vetor registros*/
 	Mostra_Registro(v_registro);
-	Mostra_Index(index);
 
 	printf("\nEscolha o numero do registro a ser removido:\n");
 	int opcao;
@@ -143,7 +142,7 @@ void Exclusao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *pi,
 
 	RemoveIndex(index, chave_primaria_pos);
 
-	/*	Registro*/	//->entra dentro do arquivo e adiciona flag de remoção
+	/*	Registro*/	//->entra n o arquivo e adiciona flag de remoção
 
 	FILE *fp;
 	fp = fopen("lista1.txt", "r+");
@@ -209,12 +208,14 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 	    int campo;
 	    char dado[50];
 	    /*	Menu escolha do campo*/
-		printf("\nQual o campo a ser alterado?\n");
-		scanf("%d",&campo);
+	    printf("\n1 = MATRIC\n2 = NOME\n3 = OP\n4 = CURSO\n5 = TURMA\n");
+		printf("\nQual o campo sera alterado? Escolha o campo de acordo com seu numero correspondente:\n");
+		
+		scanf("%d", &campo);
 		getchar();
 
 		printf("\nEscreva o valor do novo dado:\n");
-		scanf("%s", dado);
+		scanf("%[^\n]s", dado);
 
 		char chave_primaria_nova[30];
 		FILE *fp;
@@ -277,6 +278,25 @@ void Atualizacao(Index1 *index, Index2 *index2_op, Index2 *index2_turma, VetorRe
 
 				InsereIndex(index, indice_primario);
 				HeapSort(index);
+
+			/*	Mudar index2*/
+				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_op, 0, index->tamanho-1 );
+				strcpy(indice_secundario.chave_secundaria, index2_op->indice_secundario[chave_secundaria_pos].chave_secundaria);
+				RemoveIndexSecundario(index2_op, chave_secundaria_pos);
+
+				strcpy(indice_secundario.chave_primaria, chave_primaria_nova);
+
+				InsereIndexSecundario(index2_op, indice_secundario);
+				HeapSortsec(index2_op);
+				/*	Turma*/
+				chave_secundaria_pos = buscabinariasec( chave_primaria, index2_turma, 0, index->tamanho-1 );
+				strcpy(indice_secundario.chave_secundaria, index2_turma->indice_secundario[chave_secundaria_pos].chave_secundaria);
+				RemoveIndexSecundario(index2_turma, chave_secundaria_pos);
+
+				strcpy(indice_secundario.chave_primaria, chave_primaria_nova);
+
+				InsereIndexSecundario(index2_turma, indice_secundario);
+				HeapSortsec(index2_turma);
 
 			/*	Mudanca no arquivo de registros*/
 				fp = fopen("lista1.txt", "r+");

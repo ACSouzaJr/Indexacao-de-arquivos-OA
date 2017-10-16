@@ -32,11 +32,11 @@ void AtualizaIndice( const char *arquivo, Index1 *index ){
 	fclose(fp);
 }
 
-void AtualizaIndiceSec( const char *arquivo, Index2 *index ){
+void AtualizaIndiceSec( const char *arquivo, Index2 *index_sec ){
 
     FILE *fp;
 
-    int tamanho = index->tamanho;
+    int tamanho = index_sec->tamanho;
 
 
 
@@ -45,8 +45,8 @@ void AtualizaIndiceSec( const char *arquivo, Index2 *index ){
     /*lista cresce verticalmente*/
     for ( int i = 0; i < tamanho; ++i )
     {
-        fprintf( fp, "%-30.30s\t", index->indice_secundario[i].chave_primaria );
-        fprintf( fp, "%-5.5s\n", index->indice_secundario[i].chave_secundaria );
+        fprintf( fp, "%-30.30s\t", index_sec->indice_secundario[i].chave_primaria );
+        fprintf( fp, "%-5.5s\n", index_sec->indice_secundario[i].chave_secundaria );
     }
 
     fclose(fp);
@@ -92,11 +92,11 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *
         registro.curso[9]= '\0';
         registro.turma[2]= '\0';
 
-        printf("%s\t", registro.matric);
+        /*printf("%s\t", registro.matric);
         printf("%s\t", registro.nome);
         printf("%s\t", registro.op);
         printf("%s\t", registro.curso);
-        printf("%s\n", registro.turma);
+        printf("%s\n", registro.turma);*/
 
 
 
@@ -127,7 +127,7 @@ void CriarIndice(Index1 *index, Index2 *index2_op, Index2 *index2_turma, Pilha *
         InsereIndexSecundario(index2_turma, indice_secundario);
 
 
-        printf("%s\n", indice_primario.chave_primaria);
+        //printf("%s\n", indice_primario.chave_primaria);
         }
 
         ++i;

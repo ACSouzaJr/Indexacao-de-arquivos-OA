@@ -8,7 +8,7 @@
 
 /*	Como recuperar os dados quando o programa é reaberto*/
 
-int main(int argc, char const *argv[])
+int main()
 {
 	/*
 	* Req 1) Imprimir todas as operacoes realizadas
@@ -30,10 +30,20 @@ int main(int argc, char const *argv[])
 
 
 	while( 1 ){
-
-		/*	Menu	*/
+		
+		/*printf("***********************************\n");
+		printf("1 - Arquivo 1\n");
+		printf("2 - Arquivo 2\n");
 		printf("***********************************\n");
-		printf("Escolha a opercao desejada:\n");
+
+		int arquivos;
+		printf("Escolha qual arquivo deve ser alterado:\n");
+		scanf("%d", &arquivos);
+		getchar();*/
+
+
+		/*	Menu  */
+		printf("***********************************\n");
 		printf("1 - Inclusao de registro\n");
 		printf("2 - Excluir registro\n");
 		printf("3 - Atualizar registro\n");
@@ -41,7 +51,7 @@ int main(int argc, char const *argv[])
 		printf("***********************************\n");
 
 		int escolha;
-		printf("Escolha uma operacao\n");
+		printf("Escolha a operacao desejada:\n");
 		scanf("%d", &escolha);
 		getchar();
 
@@ -53,36 +63,49 @@ int main(int argc, char const *argv[])
 				/*	Req 4) Incluasao registro*/
 				registro_aluno registro;
 
-				/*	Forma melhor de pegar registros
-				fgets(registro.matric, 6, stdin);
-				fgets(registro.nome, 40, stdin);
-				fgets(registro.op, 5, stdin);
-				fgets(registro.curso, 9, stdin);
-				fgets(registro.turma, 2, stdin);
-				*/
 				printf("Qual é a matrícula do novo aluno?\n");
-				scanf("%s", registro.matric);
+				scanf("%[^\n]s", registro.matric);
+				getchar();
 				printf("Qual é o nome do novo aluno?\n");
-				scanf("%s", registro.nome);
+				scanf("%[^\n]s", registro.nome);
+				getchar();
 				printf("Qual é o OP do novo aluno?\n");
-				scanf("%s", registro.op);
+				scanf("%[^\n]s", registro.op);
+				getchar();
 				printf("Qual é o curso do novo aluno?\n");
-				scanf("%s", registro.curso);
+				scanf("%[^\n]s", registro.curso);
+				getchar();
 				printf("Qual é a turma do novo aluno?\n");
-				scanf("%s", registro.turma);
-
+				scanf("%[^\n]s", registro.turma);
+				getchar();
 				//mostrar antes da modificacao
+
+				printf("Antes de adicionar o registro:\n");
+				Mostra_Index(index);
+
+
 				InsereVRegistro(v_registro, registro);
 
 				Inclusao(registro, index, index2_op, index2_turma, PED);
+
+				printf("\nDepois de adicionar o registro:\n");
+				Mostra_Index(index);
+				printf("\n");
 
 				break;
 
 			case 2:
 				/*	Req 5) Excluir registro*/
 
+				printf("Antes de remover o registro:\n");
+				Mostra_Index(index);
+
 				Exclusao(index, index2_op, index2_turma, PED, v_registro);
-				
+
+				printf("\nDepois de remover o registro:\n");
+				Mostra_Index(index);
+				printf("\n");
+
 				break;
 
 			case 3:
@@ -90,7 +113,16 @@ int main(int argc, char const *argv[])
 				*	Muda chave primaria
 				*	nao muda chave primaria
 				*/
-				Atualizacao(index, index2_op, index2_turma, v_registro);	/*	Faco nem ideia como fazer */
+
+				printf("Antes de atualizar o registro:\n");
+				Mostra_Index(index);
+
+				Atualizacao(index, index2_op, index2_turma, v_registro);
+
+				printf("\nDepois de atualizar o registro:\n");
+				Mostra_Index(index);
+				printf("\n");
+				
 				break;
 
 			case 4:
